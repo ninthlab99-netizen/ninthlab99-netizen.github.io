@@ -50,6 +50,58 @@
     return "https://line.me/R/ti/p/" + encodeURIComponent(state.site.line_id);
   }
 
+  function debounce(fn, wait) {
+    let t;
+    return function (...args) { clearTimeout(t); t = setTimeout(() => fn.apply(this, args), wait); };
+  }
+
+  /* ---------------- Tilt (drag/hover) effect ---------------- */
+
+  const prefersReducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function attachTilt(el) {
+    if (prefersReducedMotion) return;
+    const MAX = 6;
+    function handleMove(clientX, clientY) {
+      const rect = el.getBoundingClientRect();
+      const px = (clientX - rect.left) / rect.width;
+      const py = (clientY - rect.top) / rect.height;
+      const rotateY = (px - 0.5) * MAX * 2;
+      const rotateX = (0.5 - py) * MAX * 2;
+      el.style.transform = "perspective(900px) rotateX(" + rotateX.toFixed(2) + "deg) rotateY(" + rotateY.toFixed(2) + "deg) translateY(-2px)";
+    }
+    function reset() { el.style.transform = ""; }
+
+    el.addEventListener("mousemove", (e) => handleMove(e.clientX, e.clientY));
+    el.addEventListener("mouseleave", reset);
+    el.addEventListener("touchmove", (e) => {
+      if (e.touches && e.touches[0]) handleMove(e.touches[0].clientX, e.touches[0].clientY);
+    }, { passive: true });
+    el.addEventListener("touchend", reset);
+  }
+
+  /* ---------------- Click ripple effect ---------------- */
+
+  function setupRippleDelegation() {
+    const SELECTOR = ".btn, .issue-chip, .category-tab, .selector-card, .showcase-dot, .showcase-arrow";
+    document.addEventListener("pointerdown", (e) => {
+      const target = e.target.closest(SELECTOR);
+      if (!target) return;
+      const rect = target.getBoundingClientRect();
+      const ripple = document.createElement("span");
+      ripple.className = "ripple";
+      const size = Math.max(rect.width, rect.height) * 1.6;
+      ripple.style.width = ripple.style.height = size + "px";
+      ripple.style.left = (e.clientX - rect.left - size / 2) + "px";
+      ripple.style.top = (e.clientY - rect.top - size / 2) + "px";
+      const prevPosition = getComputedStyle(target).position;
+      if (prevPosition === "static") target.style.position = "relative";
+      target.classList.add("ripple-host");
+      target.appendChild(ripple);
+      ripple.addEventListener("animationend", () => ripple.remove());
+    });
+  }
+
   /* ---------------- Header / Nav ---------------- */
 
   function renderHeaderAndNav() {
@@ -184,7 +236,7 @@
     const grid = document.getElementById("selector-grid");
     grid.innerHTML = "";
     state.services.core.forEach(cat => {
-      const card = el("div", "selector-card");
+      const card = el("div", "selector-card tilt-card");
       card.dataset.categoryId = cat.id;
       card.innerHTML =
         '<div class="selector-icon">' + (CATEGORY_ICONS[cat.id] || "") + "</div>" +
@@ -195,6 +247,7 @@
         scrollToShowcase(cat.id);
       });
       grid.appendChild(card);
+      attachTilt(card);
     });
   }
 
@@ -215,7 +268,7 @@
     dotsWrap.innerHTML = "";
 
     state.services.core.forEach((cat, i) => {
-      const slide = el("div", "showcase-slide");
+      const slide = el("div", "showcase-slide tilt-card");
       slide.dataset.categoryId = cat.id;
       slide.innerHTML =
         '<img src="' + cat.image + '" alt="' + cat.name + ' 維修示意圖" loading="lazy">' +
@@ -227,6 +280,7 @@
         "</div>";
       slide.querySelector(".showcase-cta").addEventListener("click", () => selectCategory(cat.id));
       track.appendChild(slide);
+      attachTilt(slide);
 
       const dot = el("div", "showcase-dot" + (i === 0 ? " active" : ""));
       dot.addEventListener("click", () => scrollShowcaseTo(i));
@@ -261,11 +315,6 @@
       document.getElementById("showcase").scrollIntoView({ behavior: "smooth" });
       setTimeout(() => scrollShowcaseTo(idx), 350);
     }
-  }
-
-  function debounce(fn, wait) {
-    let t;
-    return function (...args) { clearTimeout(t); t = setTimeout(() => fn.apply(this, args), wait); };
   }
 
   /* ---------------- Category tabs + issue panels ---------------- */
@@ -354,44 +403,55 @@
     const wrap = document.getElementById("other-panels");
     wrap.innerHTML = "";
 
-    state.services.other.forEach(cat => {
-      const group = el("div", "other-panel-group");
-      const head = el("div", "other-panel-head");
-      if (cat.image) head.innerHTML += '<img src="' + cat.image + '" alt="' + cat.name + '">';
-      head.innerHTML += "<h3>" + cat.name + "</h3>";
-      group.appendChild(head);
+    const grid = el("div", "other-grid");
+    const withImage = state.services.other.filter(c => c.id !== "other3c");
+    const other3c = state.services.other.find(c => c.id === "other3c");
 
-      if (cat.id === "other3c") {
-        const cta = el("div", "other3c-cta");
-        cta.innerHTML = "<p>" + cat.note + "</p>";
-        const btn = el("a", "btn btn-primary", "LINE 詢問");
-        btn.target = "_blank"; btn.rel = "noopener";
-        btn.href = buildOaMessageUrl("您好，我有其他 3C 設備想詢問維修，方便請客服協助確認嗎？謝謝。");
-        cta.appendChild(btn);
-        group.appendChild(cta);
-      } else {
-        if (cat.note) group.appendChild(el("div", "category-note", cat.note));
-        const chipsWrap = el("div", "issue-chips");
-        cat.issues.forEach(issue => {
-          const chip = el("button", "issue-chip", issue);
-          chip.addEventListener("click", () => selectIssue(cat, issue, false, chip, group));
-          chipsWrap.appendChild(chip);
-        });
-        const unsureChip = el("button", "issue-chip unsure", "不確定是哪裡壞的");
-        unsureChip.addEventListener("click", () => selectIssue(cat, null, true, unsureChip, group));
-        chipsWrap.appendChild(unsureChip);
-        group.appendChild(chipsWrap);
-
-        const confirmBox = el("div", "line-confirm");
-        confirmBox.innerHTML =
-          '<div class="line-confirm-label">將透過 LINE 傳送以下訊息給客服：</div>' +
-          '<div class="line-confirm-text"></div>' +
-          '<a href="#" target="_blank" rel="noopener" class="btn btn-primary">LINE 詢問此問題</a>';
-        group.appendChild(confirmBox);
+    withImage.forEach(cat => {
+      const card = el("div", "other-card tilt-card");
+      if (cat.image) {
+        const media = el("div", "other-card-media");
+        media.innerHTML = '<img src="' + cat.image + '" alt="' + cat.name + ' 維修示意圖" loading="lazy">';
+        card.appendChild(media);
       }
+      const body = el("div", "other-card-body");
+      body.innerHTML = "<h3>" + cat.name + "</h3>";
+      if (cat.note) body.appendChild(el("div", "category-note", cat.note));
 
-      wrap.appendChild(group);
+      const chipsWrap = el("div", "issue-chips");
+      cat.issues.forEach(issue => {
+        const chip = el("button", "issue-chip", issue);
+        chip.addEventListener("click", () => selectIssue(cat, issue, false, chip, body));
+        chipsWrap.appendChild(chip);
+      });
+      const unsureChip = el("button", "issue-chip unsure", "不確定是哪裡壞的");
+      unsureChip.addEventListener("click", () => selectIssue(cat, null, true, unsureChip, body));
+      chipsWrap.appendChild(unsureChip);
+      body.appendChild(chipsWrap);
+
+      const confirmBox = el("div", "line-confirm");
+      confirmBox.innerHTML =
+        '<div class="line-confirm-label">將透過 LINE 傳送以下訊息給客服：</div>' +
+        '<div class="line-confirm-text"></div>' +
+        '<a href="#" target="_blank" rel="noopener" class="btn btn-primary">LINE 詢問此問題</a>';
+      body.appendChild(confirmBox);
+
+      card.appendChild(body);
+      grid.appendChild(card);
+      attachTilt(card);
     });
+
+    wrap.appendChild(grid);
+
+    if (other3c) {
+      const banner = el("div", "other3c-banner");
+      banner.innerHTML = "<div><h3>" + other3c.name + "</h3><p>" + other3c.note + "</p></div>";
+      const btn = el("a", "btn btn-primary", "LINE 詢問");
+      btn.target = "_blank"; btn.rel = "noopener";
+      btn.href = buildOaMessageUrl("您好，我有其他 3C 設備想詢問維修，方便請客服協助確認嗎？謝謝。");
+      banner.appendChild(btn);
+      wrap.appendChild(banner);
+    }
   }
 
   /* ---------------- Process / Trust / Onsite ---------------- */
@@ -499,6 +559,7 @@
 
       renderHeaderAndNav();
       setupNavInteractions();
+      setupRippleDelegation();
       renderHero();
       renderAnnouncements();
       renderSelector();
