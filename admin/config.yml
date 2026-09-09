@@ -1,0 +1,181 @@
+backend:
+  name: github
+  repo: kyle951229/ninthlab99   # ⚠️ 請確認帳號／Repository 名稱正確
+  branch: main
+  base_url: https://your-oauth-worker.example.workers.dev  # ⚠️ 請改成你部署的 OAuth 中介服務網址（見 README）
+  auth_endpoint: auth
+
+media_folder: "assets/images"
+public_folder: "assets/images"
+
+publish_mode: simple
+locale: "zh_Hant"
+
+collections:
+  - name: "site"
+    label: "網站基本設定"
+    files:
+      - name: "site"
+        label: "品牌與聯絡資訊"
+        file: "content/site.json"
+        fields:
+          - { label: "品牌名稱（英文）", name: "brand_name", widget: "string" }
+          - { label: "品牌名稱（中文）", name: "brand_name_zh", widget: "string", required: false }
+          - { label: "Logo（完整版）", name: "logo", widget: "image" }
+          - { label: "Logo 簡化標記", name: "logo_mark", widget: "image", required: false }
+          - { label: "電話（純數字，用於 tel: 連結）", name: "phone", widget: "string" }
+          - { label: "電話顯示格式", name: "phone_display", widget: "string" }
+          - { label: "第二支電話（純數字，選填）", name: "phone2", widget: "string", required: false }
+          - { label: "第二支電話顯示格式", name: "phone2_display", widget: "string", required: false }
+          - { label: "LINE 官方帳號 ID（@開頭）", name: "line_id", widget: "string" }
+          - { label: "LINE QR Code 圖片", name: "line_qr", widget: "image" }
+          - { label: "客服回覆時間文字", name: "reply_hours", widget: "string" }
+          - { label: "營業時間（留空則網站不顯示）", name: "business_hours", widget: "string", required: false }
+          - label: "服務地區"
+            name: "service_areas"
+            widget: "list"
+            allow_add: true
+          - label: "SEO 設定"
+            name: "seo"
+            widget: "object"
+            fields:
+              - { label: "網站標題", name: "title", widget: "string" }
+              - { label: "網站描述", name: "description", widget: "text" }
+              - { label: "關鍵字", name: "keywords", widget: "string" }
+
+  - name: "homepage"
+    label: "首頁內容"
+    files:
+      - name: "homepage"
+        label: "首頁各區塊文字"
+        file: "content/homepage.json"
+        fields:
+          - label: "Hero 主視覺區"
+            name: "hero"
+            widget: "object"
+            fields:
+              - { label: "小標籤", name: "eyebrow", widget: "string" }
+              - { label: "主標題", name: "title", widget: "string" }
+              - { label: "副標題", name: "subtitle", widget: "text" }
+              - { label: "主要按鈕文字", name: "primary_cta", widget: "string" }
+              - { label: "次要按鈕文字", name: "secondary_cta", widget: "string" }
+          - label: "服務選擇器"
+            name: "selector"
+            widget: "object"
+            fields:
+              - { label: "標題", name: "title", widget: "string" }
+              - { label: "副標題", name: "subtitle", widget: "string" }
+          - label: "常見維修項目 標題區"
+            name: "items_intro"
+            widget: "object"
+            fields:
+              - { label: "標題", name: "title", widget: "string" }
+              - { label: "副標題", name: "subtitle", widget: "text" }
+          - label: "到府服務區塊"
+            name: "onsite"
+            widget: "object"
+            fields:
+              - { label: "英文主標", name: "title", widget: "string" }
+              - { label: "中文副標", name: "subtitle", widget: "string" }
+              - { label: "說明", name: "desc", widget: "text" }
+              - { label: "按鈕文字", name: "cta", widget: "string" }
+          - label: "信任／先報價區塊"
+            name: "trust"
+            widget: "object"
+            fields:
+              - { label: "標題", name: "title", widget: "string" }
+              - { label: "說明", name: "desc", widget: "text" }
+          - label: "維修流程步驟"
+            name: "process"
+            widget: "list"
+            fields:
+              - { label: "編號", name: "step", widget: "string" }
+              - { label: "標題", name: "title", widget: "string" }
+              - { label: "補充說明", name: "desc", widget: "string", required: false }
+          - { label: "其他服務區塊標題", name: "other_services_title", widget: "string" }
+
+  - name: "services"
+    label: "服務項目"
+    files:
+      - name: "services"
+        label: "服務分類與維修項目"
+        file: "content/services.json"
+        fields:
+          - label: "核心三大分類（iPhone／Android／電腦）"
+            name: "core"
+            widget: "list"
+            fields:
+              - { label: "代號（不要修改）", name: "id", widget: "string" }
+              - { label: "分類名稱", name: "name", widget: "string" }
+              - { label: "標語", name: "tagline", widget: "string" }
+              - { label: "示意圖片", name: "image", widget: "image" }
+              - { label: "提醒文字（選填）", name: "note", widget: "string", required: false }
+              - label: "常見故障項目"
+                name: "issues"
+                widget: "list"
+                field: { label: "項目", name: "issue", widget: "string" }
+          - label: "其他服務（平板／音響／其他3C）"
+            name: "other"
+            widget: "list"
+            fields:
+              - { label: "代號（不要修改）", name: "id", widget: "string" }
+              - { label: "分類名稱", name: "name", widget: "string" }
+              - { label: "示意圖片", name: "image", widget: "image", required: false }
+              - { label: "提醒文字（選填）", name: "note", widget: "string", required: false }
+              - label: "常見故障項目"
+                name: "issues"
+                widget: "list"
+                field: { label: "項目", name: "issue", widget: "string" }
+
+  - name: "faq"
+    label: "常見問題"
+    files:
+      - name: "faq"
+        label: "FAQ 問答"
+        file: "content/faq.json"
+        fields:
+          - label: "問答清單"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "問題", name: "q", widget: "string" }
+              - { label: "答案", name: "a", widget: "text" }
+
+  - name: "announcements"
+    label: "公告"
+    files:
+      - name: "announcements"
+        label: "公告清單"
+        file: "content/announcements.json"
+        fields:
+          - label: "公告項目"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "標題", name: "title", widget: "string" }
+              - { label: "日期（選填，格式例如 2026-09-08）", name: "date", widget: "string", required: false }
+              - { label: "內容", name: "content", widget: "text", required: false }
+
+  - name: "reviews"
+    label: "Google 評論設定"
+    files:
+      - name: "reviews"
+        label: "Google 評論整合"
+        file: "content/reviews.json"
+        fields:
+          - { label: "啟用評論區塊", name: "enabled", widget: "boolean" }
+          - { label: "Google 商家 Place ID", name: "google_place_id", widget: "string", required: false }
+          - { label: "備註（不會顯示在網站上）", name: "embed_note", widget: "text", required: false }
+
+  - name: "contact"
+    label: "聯絡客服區塊"
+    files:
+      - name: "contact"
+        label: "聯絡客服文字"
+        file: "content/contact.json"
+        fields:
+          - { label: "標題", name: "title", widget: "string" }
+          - { label: "說明", name: "desc", widget: "text" }
+          - { label: "醒目提示文字", name: "highlight", widget: "string" }
+          - { label: "撥打電話按鈕文字", name: "call_button", widget: "string" }
+          - { label: "加入 LINE 按鈕文字", name: "line_button", widget: "string" }

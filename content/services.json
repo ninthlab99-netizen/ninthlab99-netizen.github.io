@@ -1,0 +1,90 @@
+{
+  "core": [
+    {
+      "id": "iphone",
+      "name": "iPhone",
+      "tagline": "Apple 全系列維修",
+      "image": "assets/images/service-iphone.jpg",
+      "note": "",
+      "issues": [
+        "螢幕破裂／觸控異常",
+        "電池老化／耗電異常",
+        "無法充電／充電孔故障",
+        "前／後鏡頭故障",
+        "Face ID／感測器問題",
+        "喇叭無聲／雜音／麥克風異常",
+        "音量鍵／電源鍵異常",
+        "背玻璃／後殼損壞",
+        "無法開機／自動重開機",
+        "系統異常",
+        "進水檢測",
+        "主機板檢測"
+      ]
+    },
+    {
+      "id": "android",
+      "name": "Android",
+      "tagline": "Samsung・Pixel・ASUS・Sony・Xiaomi・OPPO・vivo 等",
+      "image": "assets/images/service-android.jpg",
+      "note": "Android 各品牌皆可聯絡客服詢問，實際維修項目依機型與故障狀況確認。",
+      "issues": [
+        "螢幕破裂／觸控異常",
+        "電池老化／耗電異常",
+        "無法充電／充電孔故障",
+        "前／後鏡頭故障",
+        "喇叭無聲／雜音／麥克風異常",
+        "音量鍵／電源鍵異常",
+        "背蓋損壞",
+        "無法開機／自動重開機",
+        "系統異常",
+        "進水檢測",
+        "主機板檢測"
+      ]
+    },
+    {
+      "id": "computer",
+      "name": "電腦",
+      "tagline": "組裝・升級・維修",
+      "image": "assets/images/service-computer.jpg",
+      "note": "",
+      "issues": [
+        "電腦組裝諮詢",
+        "CPU／GPU 升級",
+        "RAM／SSD 升級",
+        "電源供應器／散熱升級",
+        "無法開機",
+        "藍屏／黑屏",
+        "頻繁重開機",
+        "遊戲閃退／效能異常",
+        "過熱／異音",
+        "硬碟／SSD 問題",
+        "顯示卡問題",
+        "系統／驅動問題",
+        "整機檢測"
+      ]
+    }
+  ],
+  "other": [
+    {
+      "id": "tablet",
+      "name": "平板維修",
+      "image": "assets/images/service-tablet.jpg",
+      "note": "",
+      "issues": ["螢幕破裂／觸控異常", "電池更換", "充電孔異常", "無法開機", "系統異常", "其他故障"]
+    },
+    {
+      "id": "audio",
+      "name": "音響維修",
+      "image": "assets/images/service-audio.jpg",
+      "note": "",
+      "issues": ["擴大機", "無源音響", "有源音響", "藍牙音響", "伴唱機"]
+    },
+    {
+      "id": "other3c",
+      "name": "其他 3C",
+      "image": "",
+      "note": "其他 3C 設備歡迎直接聯絡客服詢問。",
+      "issues": []
+    }
+  ]
+}

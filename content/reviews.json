@@ -1,0 +1,5 @@
+{
+  "enabled": false,
+  "google_place_id": "",
+  "embed_note": "此檔案是 Google 評論功能的預留位置，目前尚未啟用。之後只要提供 Google 商家的 Place ID，並將 enabled 改為 true，即可在網站上顯示評論區塊。"
+}

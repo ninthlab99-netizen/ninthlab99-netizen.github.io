@@ -1,0 +1,20 @@
+{
+  "brand_name": "NINTH LAB",
+  "brand_name_zh": "九號科技工作室",
+  "logo": "assets/images/logo.png",
+  "logo_mark": "assets/images/logo-mark.png",
+  "phone": "0978033089",
+  "phone_display": "0978-033-089",
+  "phone2": "0909123456",
+  "phone2_display": "0909-123-456",
+  "line_id": "@417lyjkr",
+  "line_qr": "assets/images/line-qrcode.png",
+  "reply_hours": "客服訊息 24 小時內回覆",
+  "business_hours": "",
+  "service_areas": ["台北市", "新北市"],
+  "seo": {
+    "title": "NINTH LAB 九號科技工作室｜雙北到府 3C 維修・iPhone・Android・電腦",
+    "description": "九號科技工作室（NINTH LAB）提供台北、新北到府維修服務，iPhone、Android 手機維修，電腦組裝、升級、維修，先報價再施工，LINE 客服 24 小時內回覆。",
+    "keywords": "雙北手機維修,台北手機維修,新北手機維修,雙北到府維修,到府手機維修,iPhone維修,Android維修,手機電池更換,電腦維修,電腦組裝,電腦升級,3C維修,平板維修,音響維修"
+  }
+}
