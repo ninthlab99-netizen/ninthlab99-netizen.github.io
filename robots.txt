@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 
-Sitemap: https://ninthlab99-netizen.github.io/sitemap.xml
+Sitemap: https://ninthlab.com.tw/sitemap.xml
