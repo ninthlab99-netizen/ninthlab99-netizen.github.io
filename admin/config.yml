@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: kyle951229/ninthlab99   # ⚠️ 請確認帳號／Repository 名稱正確
+  repo: ninthlab99-netizen/ninthlab99-netizen.github.io
   branch: main
   base_url: https://your-oauth-worker.example.workers.dev  # ⚠️ 請改成你部署的 OAuth 中介服務網址（見 README）
   auth_endpoint: auth
