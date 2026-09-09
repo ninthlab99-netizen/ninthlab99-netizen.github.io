@@ -194,6 +194,7 @@ button { font: inherit; background: none; border: none; color: inherit; cursor: 
   cursor: pointer; transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .btn:hover { transform: translateY(-1px); }
+.btn:active { transform: translateY(0) scale(0.97); }
 .btn-primary { background: var(--accent); color: #FFFFFF; box-shadow: 0 4px 16px rgba(47,111,224,0.28); }
 .btn-primary:hover { background: #245ECC; }
 .dark-panel .btn-primary { background: var(--d-accent); box-shadow: 0 4px 20px rgba(91,156,240,0.35); }
@@ -412,6 +413,49 @@ footer { border-top: 1px solid var(--border); padding: 48px 0 32px; font-size: 1
 .footer-bottom { border-top: 1px solid var(--border); padding-top: 20px; text-align: center; }
 @media (max-width: 720px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr; } }
+
+/* ==========================================================
+   Tilt cards + click ripple
+   ========================================================== */
+.tilt-card { transition: transform 0.12s ease-out, box-shadow 0.2s ease; will-change: transform; }
+.selector-card.tilt-card:hover,
+.showcase-slide.tilt-card:hover,
+.other-card.tilt-card:hover { box-shadow: 0 20px 44px rgba(11,20,32,0.14); }
+.dark-panel .showcase-slide.tilt-card:hover { box-shadow: 0 20px 44px rgba(0,0,0,0.4); }
+
+.ripple-host { position: relative; overflow: hidden; }
+.ripple {
+  position: absolute; border-radius: 50%; background: rgba(255,255,255,0.45);
+  transform: scale(0); animation: ripple-anim 0.55s ease-out forwards; pointer-events: none;
+}
+.dark-panel .ripple, .btn-primary .ripple, .btn-warm .ripple, .header-cta .ripple { background: rgba(255,255,255,0.35); }
+.issue-chip .ripple, .category-tab .ripple, .selector-card .ripple, .btn-secondary .ripple { background: rgba(47,111,224,0.18); }
+@keyframes ripple-anim {
+  to { transform: scale(1); opacity: 0; }
+}
+
+/* ==========================================================
+   Other services — card grid with full media
+   ========================================================== */
+.other-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+.other-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+  display: flex; flex-direction: column;
+}
+.other-card-media { position: relative; aspect-ratio: 4 / 3; overflow: hidden; }
+.other-card-media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
+.other-card:hover .other-card-media img { transform: scale(1.06); }
+.other-card-body { padding: 22px 24px 26px; }
+.other-card-body h3 { margin: 0 0 10px; font-size: 19px; font-weight: 700; }
+
+.other3c-banner {
+  display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px 28px;
+}
+.other3c-banner h3 { margin: 0 0 4px; font-size: 17px; font-weight: 700; }
+.other3c-banner p { margin: 0; color: var(--text-muted); font-size: 14px; }
+
+@media (max-width: 720px) { .other-grid { grid-template-columns: 1fr; } }
 
 /* Skip link / accessibility */
 .skip-link {
