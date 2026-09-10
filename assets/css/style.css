@@ -457,6 +457,8 @@ footer { border-top: 1px solid var(--border); padding: 48px 0 32px; font-size: 1
 
 @media (max-width: 720px) { .other-grid { grid-template-columns: 1fr; } }
 
+/* ============ Battery promo ============ */ .promo-section { padding: 56px 0; position: relative; z-index: 1; } .promo-badge { display: inline-block; background: var(--warm); color: #2E1B00; font-weight: 700; font-size: 13px; padding: 6px 14px; border-radius: 999px; margin-bottom: 16px; } .promo-title { font-family: var(--font-display); font-size: clamp(22px, 3vw, 30px); margin: 0 0 8px; color: var(--d-text); } .promo-subtitle { color: var(--d-text-muted); font-size: 15px; margin: 0 0 28px; } .promo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-bottom: 28px; } .promo-item { display: flex; align-items: center; justify-content: space-between; gap: 10px; background: var(--d-surface); border: 1px solid var(--d-border); border-radius: var(--radius); padding: 14px 18px; } .promo-model { font-size: 14px; color: var(--d-text); font-weight: 600; } .promo-price { font-family: var(--font-display); font-size: 16px; color: var(--d-accent); font-weight: 700; white-space: nowrap; } .promo-cta { display: inline-flex; } @media (max-width: 640px) { .promo-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); } }
+
 /* Skip link / accessibility */
 .skip-link {
   position: absolute; left: -999px; top: 0; background: var(--accent); color: #FFFFFF;
