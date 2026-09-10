@@ -3,7 +3,7 @@
 
   document.getElementById("year").textContent = new Date().getFullYear();
 
-  const state = { site: null, home: null, services: null, faq: null, contact: null, announcements: null, reviews: null, activeCategoryId: null };
+    const state = { site: null, home: null, services: null, faq: null, contact: null, announcements: null, reviews: null, promotions: null, activeCategoryId: null };
 
   function el(tag, className, html) {
     const node = document.createElement(tag);
@@ -537,21 +537,14 @@
     slot.appendChild(section);
   }
 
+/* ---------------- Battery promo ---------------- */ function renderBatteryPromo() { const promo = state.promotions?.battery_promo; const slot = document.getElementById("battery-promo-slot"); if (!promo || !promo.enabled) { slot.innerHTML = ""; return; } const section = el("section", "promo-section dark-panel"); const bg = el("div", "dark-panel-bg"); section.appendChild(bg); const wrap = el("div", "container", '<div style="position:relative;z-index:1;"></div>'); const inner = wrap.querySelector("div"); if (promo.badge) inner.appendChild(el("div", "promo-badge", promo.badge)); inner.appendChild(el("h2", "promo-title", promo.title || "")); if (promo.subtitle) inner.appendChild(el("p", "promo-subtitle", promo.subtitle)); const grid = el("div", "promo-grid"); (promo.items || []).forEach(function(item) { const card = el("div", "promo-item"); card.innerHTML = '<span class="promo-model">' + item.model + "</span>" + '<span class="promo-price">NT$ ' + item.price.toLocaleString() + "</span>"; grid.appendChild(card); }); inner.appendChild(grid); const cta = el("a", "btn btn-warm promo-cta", "LINE 詢問換電池"); cta.target = "_blank"; cta.rel = "noopener"; cta.href = buildOaMessageUrl("您好，我看到新開幕換電池優惠，想詢問我的 iPhone 換電池的相關細節，謝謝。"); inner.appendChild(cta); wrap.appendChild(inner); section.appendChild(wrap); slot.innerHTML = ""; slot.appendChild(section); }
+  
   /* ---------------- Init ---------------- */
 
   async function init() {
     try {
-      const [site, home, services, faq, contact, announcements, reviews] = await Promise.all([
-        loadJSON("content/site.json"),
-        loadJSON("content/homepage.json"),
-        loadJSON("content/services.json"),
-        loadJSON("content/faq.json"),
-        loadJSON("content/contact.json"),
-        loadJSON("content/announcements.json"),
-        loadJSON("content/reviews.json"),
-      ]);
-      state.site = site; state.home = home; state.services = services; state.faq = faq; state.contact = contact;
-      state.announcements = announcements; state.reviews = reviews;
+      const [site, home, services, faq, contact, announcements, reviews, promotions] = await Promise.all([      
+              loadJSON("content/site.json"), loadJSON("content/homepage.json"), loadJSON("content/services.json"), loadJSON("content/faq.json"), loadJSON("content/contact.json"), loadJSON("content/announcements.json"), loadJSON("content/reviews.json"), loadJSON("content/promotions.json") ]); state.site = site; state.home = home; state.services = services; state.faq = faq; state.contact = contact; state.announcements = announcements; state.reviews = reviews; state.promotions = promotions;
 
       document.title = site.seo?.title || document.title;
       const descTag = document.querySelector('meta[name="description"]');
@@ -561,7 +554,7 @@
       setupNavInteractions();
       setupRippleDelegation();
       renderHero();
-      renderAnnouncements();
+      renderAnnouncements(); renderBatteryPromo();
       renderSelector();
       renderShowcase();
       renderItemsSection();
