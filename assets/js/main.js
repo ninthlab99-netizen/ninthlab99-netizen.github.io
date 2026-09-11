@@ -153,6 +153,7 @@
     if (site.line_qr) document.querySelector(".qr-box img").src = site.line_qr;
 
     applyText("footer-areas", "服務地區：" + (site.service_areas || []).join("／"));
+    applyText("footer-note", site.footer_note);
 
     // nav dropdown
     const dropdown = document.getElementById("services-dropdown");
