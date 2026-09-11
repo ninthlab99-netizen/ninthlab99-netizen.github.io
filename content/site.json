@@ -9,6 +9,7 @@
   "line_qr": "assets/images/line-qrcode.png",
   "reply_hours": "客服訊息 24 小時內回覆",
   "business_hours": "",
+    "footer_note": "維修報價視維修情形而訂價，非統一價格",
   "service_areas": ["台北市", "新北市"],
   "seo": {
     "title": "NINTH LAB 九號科技工作室｜雙北到府 3C 維修・iPhone・Android・電腦",
