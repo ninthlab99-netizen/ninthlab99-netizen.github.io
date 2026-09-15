@@ -345,6 +345,7 @@
     const panel = el("div", "category-panel" + (isActive ? " active" : ""));
     panel.dataset.categoryId = cat.id;
 
+        if (cat.price_range) panel.appendChild(el("div", "price-range", "維修報價區間：" + cat.price_range));
     if (cat.note) panel.appendChild(el("div", "category-note", cat.note));
 
     const chipsWrap = el("div", "issue-chips");
@@ -417,6 +418,7 @@
       }
       const body = el("div", "other-card-body");
       body.innerHTML = "<h3>" + cat.name + "</h3>";
+            if (cat.price_range) body.appendChild(el("div", "price-range", "維修報價區間：" + cat.price_range));
       if (cat.note) body.appendChild(el("div", "category-note", cat.note));
 
       const chipsWrap = el("div", "issue-chips");
