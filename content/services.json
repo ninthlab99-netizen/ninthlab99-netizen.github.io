@@ -6,6 +6,7 @@
       "tagline": "Apple 全系列維修",
       "image": "assets/images/service-iphone.jpg",
       "note": "",
+              "price_range": "NT$ 1,000 ~ 10,000+",
       "issues": [
         "螢幕破裂／觸控異常",
         "電池老化／耗電異常",
@@ -27,6 +28,7 @@
       "tagline": "Samsung・Pixel・ASUS・Sony・Xiaomi・OPPO・vivo 等",
       "image": "assets/images/service-android.jpg",
       "note": "Android 各品牌皆可聯絡客服詢問，實際維修項目依機型與故障狀況確認。",
+            "price_range": "NT$ 1,000 ~ 10,000+",
       "issues": [
         "螢幕破裂／觸控異常",
         "電池老化／耗電異常",
@@ -47,6 +49,7 @@
       "tagline": "組裝・升級・維修",
       "image": "assets/images/service-computer.jpg",
       "note": "",
+            "price_range": "NT$ 3,500 ~ 30,000+",
       "issues": [
         "電腦組裝諮詢",
         "CPU／GPU 升級",
@@ -70,6 +73,7 @@
       "name": "平板維修",
       "image": "assets/images/service-tablet.jpg",
       "note": "",
+            "price_range": "NT$ 1,000 ~ 10,000+",
       "issues": ["螢幕破裂／觸控異常", "電池更換", "充電孔異常", "無法開機", "系統異常", "其他故障"]
     },
     {
